@@ -13,17 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gateway.API", "Gateway.API\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order", "Order", "{8AEC7E1E-FBB8-4710-88D5-1CE49499DFD1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.API", "Order.API\Order.API.csproj", "{9BA216DF-A250-4548-878F-0A50C9FEE395}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Product", "Product", "{4C9E5F8E-44B3-47CE-996F-DF7597DCD9B3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Command", "Command", "{08CD92B9-6A30-49B9-BD81-6316DF6BD9DD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Infra.Data", "Order.Infra.Data\Order.Infra.Data.csproj", "{E1AE54C7-2EA2-45DE-AAFC-AA4F0531E587}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Domain", "Order.Domain\Order.Domain.csproj", "{F2F93089-FF19-4BE1-84E7-F465B04FD86A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Service", "Order.Service\Order.Service.csproj", "{A7A9BEE8-E7C1-4E03-9DC6-D93FFED885C0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComandaPro.CrossCutting", "ComandaPro.CrossCutting\ComandaPro.CrossCutting.csproj", "{1C822B44-B110-4CB8-8CEF-09301AA95DEA}"
 EndProject
