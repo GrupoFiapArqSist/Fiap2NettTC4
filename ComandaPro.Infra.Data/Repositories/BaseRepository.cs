@@ -1,6 +1,7 @@
 ﻿using ComandaPro.Domain.Interfaces.Entities;
 using ComandaPro.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace ComandaPro.Infra.Data.Repositories;
 
@@ -36,6 +37,9 @@ public abstract class BaseRepository<TObject, G, TContext> : IBaseRepository<TOb
     public async Task<IList<TObject>> Select() =>
         await _dataContext.Set<TObject>().ToListAsync();
 
+    public async Task<IList<TObject>> Select(Expression<Func<TObject, bool>> predicate) =>
+        await _dataContext.Set<TObject>().Where(predicate).ToListAsync();
+    
     public async Task<TObject> Select(G id) =>
         await _dataContext.Set<TObject>().FindAsync(id);
 
