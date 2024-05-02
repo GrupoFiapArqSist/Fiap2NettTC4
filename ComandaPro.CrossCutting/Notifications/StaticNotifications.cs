@@ -17,4 +17,13 @@ public static class StaticNotifications
     public static Notification UserActivated = new("UserActivated", "Ativação de usuário alterada com sucesso!");
     public static Notification UserApproved = new("UserApproved", "Usuario aprovado com sucesso!");
     #endregion
+
+    #region [Order]
+    public static Notification OrderSuccess = new("OrderSuccess", "Pedido e itens inserido com sucesso!");
+    public static Notification OrderError = new("OrderError", "Pedido com erro.");
+    public static Notification OrderNotFound = new("OrderNotFound", "Não há pedidos nesta comanda.");
+    public static Notification OrderDeleteSucess = new("OrderDeleteSucess", "Pedido excluido com sucesso.");
+    public static Notification OrderDeleteCommandSucess = new("OrderDeleteCommandSucess", "Pedidos excluidos com sucesso e valores recalculados.");
+    public static Notification OrderItemsUpdateSucess = new("OrderItemsUpdateSucess", "Pedido atualizado com sucesso e valores recalculados.");
+    #endregion
 }
