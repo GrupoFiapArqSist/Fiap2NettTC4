@@ -2,19 +2,21 @@ using AutoMapper;
 using ComandaPro.CrossCutting.Notifications;
 using ComandaPro.Domain.Interfaces.Services;
 using ComandaPro.Service.Services;
+using LoginAuthUser.API.Filters;
+using LoginAuthUser.API.Mapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Order.API.Filter;
-using Order.API.Mapper;
-using Order.Domain.Interfaces.Repositories;
-using Order.Domain.Interfaces.Services;
-using Order.Infra.Data.Context;
-using Order.Infra.Data.Repositories;
-using Order.Service.Services;
+using Product.Domain.Interfaces.Repositories;
+using Product.Domain.Interfaces.Services;
+using Product.Infra.Data.Context;
+using Product.Infra.Data.Repositories;
+using Product.Service.Services;
 using System.Text;
 using System.Text.Json.Serialization;
+using Product.API.Mapper;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -31,6 +33,11 @@ builder.Services.AddControllers(options =>
 ;
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();
+
+services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 #region [DB]
 services.AddDbContext<ApplicationDbContext>(options =>
@@ -64,17 +71,18 @@ services
 #endregion
 
 #region [Mapper]  
-IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+IMapper mapper = Product.API.Mapper.MappingConfig.RegisterMaps().CreateMapper();
 services.AddSingleton(mapper);
 #endregion
 
 #region [DI]
 services.AddScoped<NotificationContext>();
 services.AddScoped<IBaseService, BaseService>();
-services.AddScoped<IOrderService, OrderService>();
+services.AddScoped<IProductService, ProductService>();
+services.AddScoped<ICategoryService, CategoryService>();
 
-services.AddScoped<IOrderRepository, OrderRepository>();
-services.AddScoped<IOrderItemsRepository, OrderItemsRepository>();
+services.AddScoped<IProductRepository, ProductRepository>();
+services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 #endregion
 
@@ -82,7 +90,7 @@ services.AddScoped<IOrderItemsRepository, OrderItemsRepository>();
 services.AddCors();
 services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Order v1", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Product v1", Version = "v1" });
     c.EnableAnnotations();
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -132,7 +140,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order v1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Product v1");
     });
 }
 #endregion
