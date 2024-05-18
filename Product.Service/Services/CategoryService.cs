@@ -30,7 +30,7 @@ namespace Product.Service.Services
             if (existingCategory != null)
             {
                 _notificationContext.AddNotification(StaticNotifications.CategoryAlreadyExists);
-                return default;
+                return new DefaultServiceResponseDto { Success = false };
             }
 
             var newCategoryDb = _mapper.Map<Category>(dto);

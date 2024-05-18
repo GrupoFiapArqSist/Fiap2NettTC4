@@ -22,15 +22,19 @@ namespace Product.Service.Services
         public async Task<DefaultServiceResponseDto> AddProductAsync(AddProductDto dto, int userId, string accessToken)
         {
             var validationResult = Validate(dto, Activator.CreateInstance<AddProductValidator>());
-            if (!validationResult.IsValid) { _notificationContext.AddNotifications(validationResult.Errors); return default; }
+            if (!validationResult.IsValid) { _notificationContext.AddNotifications(validationResult.Errors);
+                return new DefaultServiceResponseDto { Success = false };
+            }
            
             if (await _productRepository.ExistsByName(dto.Name) is not null)
             {
-                _notificationContext.AddNotification(StaticNotifications.ProductAlreadyExists); return default;
+                _notificationContext.AddNotification(StaticNotifications.ProductAlreadyExists);
+                return new DefaultServiceResponseDto { Success = false };
             }
             else if (await _categoryRepository.Select(dto.CategoryId) is null)
             {
-                _notificationContext.AddNotification(StaticNotifications.CategoryNotExists); return default;
+                _notificationContext.AddNotification(StaticNotifications.CategoryNotExists);
+                return new DefaultServiceResponseDto { Success = false };
             }
 
             var newProductDb = _mapper.Map<Domain.Entities.Product>(dto);

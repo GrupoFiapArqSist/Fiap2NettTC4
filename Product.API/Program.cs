@@ -17,6 +17,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using Product.API.Mapper;
 using Microsoft.AspNetCore.Mvc;
+using static Product.API.Mapper.MappingConfig;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -71,8 +72,7 @@ services
 #endregion
 
 #region [Mapper]  
-IMapper mapper = Product.API.Mapper.MappingConfig.RegisterMaps().CreateMapper();
-services.AddSingleton(mapper);
+services.AddAutoMapper(typeof(MappingProfile));
 #endregion
 
 #region [DI]

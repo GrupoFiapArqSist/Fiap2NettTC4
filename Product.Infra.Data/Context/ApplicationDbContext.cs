@@ -1,6 +1,6 @@
 ﻿using ComandaPro.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Product.Domain.Entities;
+using Microsoft.EntityFrameworkCore.InMemory;
 
 namespace Product.Infra.Data.Context;
 
@@ -25,3 +25,4 @@ public class ApplicationDbContext : DbContext
         optionsBuilder.UseLazyLoadingProxies();
     }
 }
+
