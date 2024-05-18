@@ -67,7 +67,6 @@ services
 #region [Mapper]            
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 services.AddSingleton(mapper);
-services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 #endregion
 
 #region [DI]

@@ -1,4 +1,4 @@
-﻿namespace ComandaPro.CrossCutting.Notifications;
+namespace ComandaPro.CrossCutting.Notifications;
 
 public static class StaticNotifications
 {
@@ -25,7 +25,26 @@ public static class StaticNotifications
     public static Notification OrderDeleteSucess = new("OrderDeleteSucess", "Pedido excluído com sucesso.");
     public static Notification OrderDeleteCommandSucess = new("OrderDeleteCommandSucess", "Pedidos excluídos com sucesso e valores recalculados.");
     public static Notification OrderItemsUpdateSucess = new("OrderItemsUpdateSucess", "Pedido atualizado com sucesso e valores recalculados.");
-	#endregion
+
+    #endregion
+
+    #region [Product]
+    public static Notification ProductSucess = new("ProductSucess", "Produto inserido com sucesso!");
+    public static Notification ProductError = new("ProductError", "Produto com erro.");
+    public static Notification ProductDeleteSucess = new("ProductDeleteSucess", "Produto excluido com sucesso!");
+    public static Notification ProductUpdateSucess = new("ProductUpdateSucess", "Produto atualizado com sucesso!");
+    public static Notification ProductNotExists = new("ProductNotExists", "Produto não existe.");
+    public static Notification ProductAlreadyExists = new("ProductAlreadyExists", "Produto já existente.");
+    #endregion
+
+    #region [Category]
+    public static Notification CategorySucess = new("CategorySucess", "Categoria inserida com sucesso!");
+    public static Notification CategoryError = new("CategoryError", "Categoria com erro.");
+    public static Notification CategoryDeleteSucess = new("CategoryDeleteSucess", "Categoria excluida com sucesso!");
+    public static Notification CategoryNotExists = new("CategoryNotExists", "Categoria não existe.");
+    public static Notification CategoryAlreadyExists = new("CategoryAlreadyExists", "Categoria já existente.");
+    public static Notification CategoryConflict = new("CategoryConflict", "Categoria está atribuída a um produto ativo no cardápio.");
+    #endregion
 
 	#region [Command]
 	public static Notification CommandError = new("CommandError", "Comanda com erro.");
