@@ -1,4 +1,4 @@
-﻿namespace ComandaPro.CrossCutting.Notifications;
+namespace ComandaPro.CrossCutting.Notifications;
 
 public static class StaticNotifications
 {
@@ -22,9 +22,10 @@ public static class StaticNotifications
     public static Notification OrderSuccess = new("OrderSuccess", "Pedido e itens inserido com sucesso!");
     public static Notification OrderError = new("OrderError", "Pedido com erro.");
     public static Notification OrderNotFound = new("OrderNotFound", "Não há pedidos nesta comanda.");
-    public static Notification OrderDeleteSucess = new("OrderDeleteSucess", "Pedido excluido com sucesso.");
-    public static Notification OrderDeleteCommandSucess = new("OrderDeleteCommandSucess", "Pedidos excluidos com sucesso e valores recalculados.");
+    public static Notification OrderDeleteSucess = new("OrderDeleteSucess", "Pedido excluído com sucesso.");
+    public static Notification OrderDeleteCommandSucess = new("OrderDeleteCommandSucess", "Pedidos excluídos com sucesso e valores recalculados.");
     public static Notification OrderItemsUpdateSucess = new("OrderItemsUpdateSucess", "Pedido atualizado com sucesso e valores recalculados.");
+
     #endregion
 
     #region [Product]
@@ -44,4 +45,13 @@ public static class StaticNotifications
     public static Notification CategoryAlreadyExists = new("CategoryAlreadyExists", "Categoria já existente.");
     public static Notification CategoryConflict = new("CategoryConflict", "Categoria está atribuída a um produto ativo no cardápio.");
     #endregion
+
+	#region [Command]
+	public static Notification CommandError = new("CommandError", "Comanda com erro.");
+	public static Notification CommandIsAlreadyOpened = new("CommandIsAlreadyOpened", "Comanda já está aberta.");
+	public static Notification CommandOpenedSuccess = new("CommandOpenedSuccess", "Comanda aberta com sucesso.");
+    public static Notification CommandNotFound = new("CommandNotFound", "Comanda não encontrada.");
+    public static Notification CommandIsAlreadyClosed = new("CommandIsAlreadyClosed", "Comanda já está fechada.");
+    public static Notification CommandClosedSuccess = new("CommandClosedSuccess", "Comanda fechada com sucesso.");
+	#endregion
 }
