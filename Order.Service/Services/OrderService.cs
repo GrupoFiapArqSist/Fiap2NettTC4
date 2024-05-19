@@ -19,7 +19,7 @@ public class OrderService(IMapper mapper, IOrderRepository orderRepository, Noti
     private readonly NotificationContext _notificationContext = notificationContext;
     private readonly IOrderItemsRepository _orderItemsRepository = orderItemsRepository;
 
-    public async Task<DefaultServiceResponseDto> AddOrder(AddOrderDto addOrderDto, int userId, string accessToken)
+    public async Task<DefaultServiceResponseDto> AddOrder(AddOrderDto addOrderDto, int userId)
     {
         var validationResult = Validate(addOrderDto, Activator.CreateInstance<AddOrderValidator>());
         if (!validationResult.IsValid) { _notificationContext.AddNotifications(validationResult.Errors); return default; }
@@ -47,7 +47,6 @@ public class OrderService(IMapper mapper, IOrderRepository orderRepository, Noti
             orderItems.OrderId = newOrderDb.Id;
             await _orderItemsRepository.Insert(orderItems);
         }
-
 
         if (newOrderDb.Id > 0)
             return new DefaultServiceResponseDto()
