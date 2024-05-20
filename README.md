@@ -82,6 +82,23 @@ Endpoints
 
 ## UI
 
+#### FALTA AQUI
+
+### Qualidade de software
+
+Foi desenvolvido testes unitários e de integração nos principais casos de uso(TDD). 
+Utilizando tecnologia xUnit e Moq para simular comportamentos de dependências externas, serviços, repositórios, ou qualquer outra interface.
+
+## Testes Unitários
+
+![image](https://github.com/GrupoFiapArqSist/Fiap2NettTC4/assets/60990141/8d7833c3-d192-43a6-907d-98ac647e8243)
+![image](https://github.com/GrupoFiapArqSist/Fiap2NettTC4/assets/60990141/d4929632-794b-4878-a865-6d7a55601fe6)
+![image](https://github.com/GrupoFiapArqSist/Fiap2NettTC4/assets/60990141/fad7919b-0dcb-49dd-bc79-171f0c5162f7)
+
+## Testes de Integração
+![image](https://github.com/GrupoFiapArqSist/Fiap2NettTC4/assets/60990141/c04ff67e-d79b-4038-a0c6-aaca70a4bb37)
+![image](https://github.com/GrupoFiapArqSist/Fiap2NettTC4/assets/60990141/ed5c5df2-a5ae-4c2a-b40d-22ef37c0f7ea)
+
 
 
 
