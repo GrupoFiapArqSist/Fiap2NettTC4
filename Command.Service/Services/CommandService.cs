@@ -22,7 +22,7 @@ namespace Command.Service.Services
 
 		public async Task<DefaultServiceResponseDto> OpenCommand(int number, int userId)
 		{
-			var dto = new CommandDto { Number = number, UserId = userId, Status = CommandStatusEnum.Open };
+			var dto = new CommandDto { Number = number, UserId = userId, Status = CommandStatusEnum.Open, CreatedAt = DateTime.Now };
 
 			var validationResult = Validate(dto, Activator.CreateInstance<CommandDtoValidator>());
 			if (!validationResult.IsValid)
