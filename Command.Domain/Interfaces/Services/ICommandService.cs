@@ -1,5 +1,6 @@
 ﻿using ComandaPro.Domain.Dtos.Default;
 using Command.Domain.Dtos;
+using Command.Domain.Filters;
 
 namespace Command.Domain.Interfaces.Services
 {
@@ -7,7 +8,7 @@ namespace Command.Domain.Interfaces.Services
 	{
 		Task<DefaultServiceResponseDto> OpenCommand(int number, int userId);
 
-		Task<IEnumerable<CommandDto>> GetOpenCommands();
+		Task<IEnumerable<CommandDto>> GetCommands(CommandFilter filter, string accessToken);
 
 		Task<CommandDto?> CloseCommand(int number, string accessToken);
 	}

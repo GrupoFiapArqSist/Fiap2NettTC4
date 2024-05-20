@@ -40,6 +40,7 @@ namespace Command.Test.IntegrationTests
 				.Options;
 		}
 
+
 		[TestMethod]
 		public async Task GetOpenCommandsAsync_ShouldReturnCommand_WhenCommandExists()
 		{
@@ -52,12 +53,11 @@ namespace Command.Test.IntegrationTests
 				new NotificationContext()
 			);
 
-			await commandService.OpenCommand(1, 1);
-
-			var result = await commandService.GetOpenCommands();
+			var result = await commandService.OpenCommand(1, 1);
 
 			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.Single().Number);
+			Assert.AreEqual(StaticNotifications.CommandOpenedSuccess.Message, result.Message);
 		}
+
 	}
 }

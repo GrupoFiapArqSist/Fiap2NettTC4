@@ -1,8 +1,7 @@
-using AutoMapper;
 using ComandaPro.CrossCutting.Notifications;
 using ComandaPro.Domain.Interfaces.Services;
 using ComandaPro.Service.Services;
-using Command.API.Mapper;
+using Command.API.Filter;
 using Command.Domain.Interfaces.Integration;
 using Command.Domain.Interfaces.Repositories;
 using Command.Domain.Interfaces.Services;
@@ -15,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json.Serialization;
 using static Command.API.Mapper.MappingConfig;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,10 +22,15 @@ var services = builder.Services;
 
 // Add services to the container.
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Add services to the container.
+
+builder.Services.AddControllers(options =>
+{
+	options.Filters.Add<NotificationFilter>();
+}).AddJsonOptions(options =>
+{
+	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();

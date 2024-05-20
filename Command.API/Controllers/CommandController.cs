@@ -1,5 +1,6 @@
 ﻿using ComandaPro.Domain.Extensions;
 using Command.Domain.Dtos;
+using Command.Domain.Filters;
 using Command.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,18 +26,18 @@ namespace Command.API.Controllers
 			return Ok(response);
 		}
 
-		[HttpGet]
+		[HttpPost]
 		[SwaggerOperation(Summary = "get open commands")]
 		[SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(IEnumerable<CommandDto>))]
 		[SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(IReadOnlyCollection<dynamic>))]
 		[SwaggerResponse((int)HttpStatusCode.InternalServerError)]
-		public async Task<IActionResult> GetOpenCommands()
+		public async Task<IActionResult> GetCommands([FromBody] CommandFilter filter)
 		{
-			var response = await commandService.GetOpenCommands();
+			var response = await commandService.GetCommands(filter, this.GetAccessToken());
 			return Ok(response);
 		}
 
-		[HttpPost]
+		[HttpPut]
 		[Route("close/{number}")]
 		[SwaggerOperation(Summary = "close command")]
 		[SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(CommandDto))]

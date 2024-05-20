@@ -27,7 +27,7 @@ namespace Product.Infra.Data.Mapping
 
             builder.Property(p => p.Price)
               .HasColumnName("Price")
-              .HasColumnType("float")
+              .HasColumnType("decimal(18,2)")
               .IsRequired();
 
             builder.Property(p => p.CategoryId)
