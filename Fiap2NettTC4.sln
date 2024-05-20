@@ -68,6 +68,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Command.API", "Command.API\Command.API.csproj", "{FEC3F17E-3D91-4783-8C7B-B348295F16AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Tests", "Order.Tests\Order.Tests.csproj", "{459111E7-F162-4FEA-9507-9CE8B10E9491}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Command.Test", "Command.Test\Command.Test.csproj", "{AAC6ED9B-7946-4E92-90ED-E443CDEA0EB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

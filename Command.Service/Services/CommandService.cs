@@ -49,6 +49,13 @@ namespace Command.Service.Services
 			};
 		}
 
+		public async Task<IEnumerable<CommandDto>> GetOpenCommands()
+		{
+			var commands = await _commandRepository.Select();
+			var dtos = _mapper.Map<IEnumerable<CommandDto>>(commands);
+			return dtos;
+		}
+
 		public async Task<CommandDto?> CloseCommand(int number, string accessToken)
 		{
 			var command = (await _commandRepository.Select(c => c.Number == number)).SingleOrDefault();
@@ -67,9 +74,7 @@ namespace Command.Service.Services
 
 			var orders = await _orderIntegration.GetOrdersByCommand(command.Id, accessToken);
 
-			command.ValueTotal = orders.Sum(o => o.ValueTotal);
-			command.ServiceChage = command.ValueTotal * 0.1m;
-			command.ValueTotal += command.ServiceChage;
+			command.ValueTotalBeforeServiceCharge = orders.Sum(o => o.ValueTotal);
 			command.ClosedAt = DateTime.Now;
 			command.Status = CommandStatusEnum.Closed;
 			await _commandRepository.Update(command);

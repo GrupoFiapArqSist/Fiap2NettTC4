@@ -7,6 +7,8 @@ namespace Command.Domain.Interfaces.Services
 	{
 		Task<DefaultServiceResponseDto> OpenCommand(int number, int userId);
 
+		Task<IEnumerable<CommandDto>> GetOpenCommands();
+
 		Task<CommandDto?> CloseCommand(int number, string accessToken);
 	}
 }

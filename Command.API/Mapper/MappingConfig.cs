@@ -13,5 +13,13 @@ namespace Command.API.Mapper
 			});
 			return mappingConfig;
 		}
+
+		public class MappingProfile : Profile
+		{
+			public MappingProfile()
+			{
+				CreateMap<CommandDto, Domain.Entities.Command>().ReverseMap();
+			}
+		}
 	}
 }
