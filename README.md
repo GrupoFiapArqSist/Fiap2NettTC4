@@ -87,7 +87,7 @@ Endpoints
 ### Qualidade de software
 
 Foi desenvolvido testes unitários e de integração nos principais casos de uso(TDD). 
-Utilizando tecnologia xUnit e Moq para simular comportamentos de dependências externas, serviços, repositórios, ou qualquer outra interface.
+Utilizando tecnologia xUnit e Moq para simular comportamentos de dependências externas, serviços, repositórios e interfaces.
 
 ## Testes Unitários
 
