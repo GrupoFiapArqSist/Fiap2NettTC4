@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using static Command.API.Mapper.MappingConfig;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -61,9 +62,7 @@ services
 #endregion
 
 #region [Mapper]  
-IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
-services.AddSingleton(mapper);
-services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+services.AddAutoMapper(typeof(MappingProfile));
 #endregion
 
 #region [DI]
