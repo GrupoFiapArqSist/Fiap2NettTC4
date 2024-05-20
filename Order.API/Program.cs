@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Order.API.Filter;
-using Order.API.Mapper;
 using Order.Domain.Interfaces.Repositories;
 using Order.Domain.Interfaces.Services;
 using Order.Infra.Data.Context;
@@ -21,7 +20,7 @@ var services = builder.Services;
 
 // Add services to the container.
 
-builder.Services.AddControllers(options =>
+services.AddControllers(options =>
 {
     options.Filters.Add<NotificationFilter>();
 }).AddJsonOptions(options =>
@@ -29,7 +28,6 @@ builder.Services.AddControllers(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 ;
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();
 
 #region [DB]
@@ -64,8 +62,7 @@ services
 #endregion
 
 #region [Mapper]  
-IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
-services.AddSingleton(mapper);
+services.AddAutoMapper(typeof(MapperConfiguration));
 #endregion
 
 #region [DI]

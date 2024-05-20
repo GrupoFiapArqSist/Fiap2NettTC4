@@ -6,7 +6,7 @@ namespace Order.Domain.Interfaces.Services;
 
 public interface IOrderService
 {
-    Task<DefaultServiceResponseDto> AddOrder(AddOrderDto addOrderDto, int userId, string accessToken);
+    Task<DefaultServiceResponseDto> AddOrder(AddOrderDto addOrderDto, int userId);
 
     Task<OrderDetailsDto> GetOrderByCommandId(OrderCommandFilter orderFilter);
 
