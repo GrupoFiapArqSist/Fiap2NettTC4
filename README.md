@@ -37,8 +37,6 @@ O Gateway foi implementado utilizando Ocelot para permitir o acesso aos endpoint
 
 ## Comunicação entre Microsserviços
 
-![image](https://github.com/GrupoFiapArqSist/Fiap2NettTC3/assets/60990141/7106a6ff-f08f-48a4-a6f8-c85fb5dae8e6)
-
 Os serviços também se comunicam através dos endpoints e do gateway para acessar informações de outros microsserviços. Isso permite realizar validações e obter dados necessários para aplicar a lógica de negócio de forma distribuída, ele pode fazer uma requisição HTTP para o endpoint correspondente no microsserviço alvo, utilizando o gateway como intermediário.
 
 * Detalhes dos Microserviços:
