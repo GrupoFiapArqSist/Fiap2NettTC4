@@ -1,5 +1,5 @@
 # Comanda Pro
-Plataforma de controle de comandas de restaurante e gerenciamento de produtos, desenvolvida em .NET 8 com arquitetura de microsserviços e arquitetura limpa.
+Plataforma de controle de comandas de restaurante e gerenciamento de produtos, desenvolvida em .NET 8 com arquitetura de microsserviços e arquitetura limpa com testes unitários e testes de integração.
 
 ### 📋 Pré-requisitos
 
