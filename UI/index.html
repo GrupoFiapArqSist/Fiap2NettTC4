@@ -12,6 +12,14 @@
 
 <body>
     <div id="app" class="container" v-cloak>
+        <div class="row mt-3" :class="{ 'd-none' : !message.text }">
+            <div class="col">
+                <div class="alert alert-dismissible fade show" :class="`alert-${message.type}`" role="alert">
+                    {{ message.text }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
         <div class="row mt-3 mb-3">
             <div class="col">
                 <h1 class="text-center">ComandaPro</h1>
@@ -133,6 +141,8 @@
     const ComandaProApp = {
         data() {
             return {
+                message: { text: '', type: 'primary' },
+
                 apiClient: new ApiClient('https://localhost:7100/gateway'),
                 authToken: null,
                 categories: [],
@@ -163,7 +173,13 @@
                     username: 'admin',
                     password: '1q2w3e4r@#$A'
                 }
-                this.authToken = await this.apiClient.post('auth/login', request);
+                try {
+                    this.authToken = await this.apiClient.post('auth/login', request);
+                }
+                catch (error) {
+                    this.message.text = 'Erro: Verifique se a API está em execução';
+                    this.message.type = 'danger';
+                }
             },
             closeCommand: async function (commandNumber) {
                 await this.apiClient.put(`command/close/${commandNumber}`, null, this.authToken);
