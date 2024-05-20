@@ -169,16 +169,14 @@
                 this.closeModal('modal-add-order');
             },
             authenticate: async function () {
-                const request = {
-                    username: 'admin',
-                    password: '1q2w3e4r@#$A'
-                }
                 try {
-                    this.authToken = await this.apiClient.post('auth/login', request);
+                    this.authToken = JSON.parse(localStorage.getItem('authToken'));
                 }
                 catch (error) {
-                    this.message.text = 'Erro: Verifique se a API está em execução';
+                    this.message.text = 'Erro: Ocorreu um erro na autenticação. Redirecionando...';
                     this.message.type = 'danger';
+                    localStorage.removeItem('authToken');
+                    setTimeout(() => { location.href = 'login.html' }, 3000);
                 }
             },
             closeCommand: async function (commandNumber) {

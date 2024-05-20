@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComandaPro</title>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<body>
+    <div id="app" class="container" v-cloak>
+        <div class="row mt-3" :class="{ 'd-none' : !message.text }">
+            <div class="col">
+                <div class="alert alert-dismissible fade show" :class="`alert-${message.type}`" role="alert">
+                    {{ message.text }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3 col">
+                <form @submit.prevent="authenticate()">
+                    <h1 class="text-center mb-5">ComandaPro</h1>
+
+                    <div class="form-floating mt-2">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
+                            required v-model.lazy="username">
+                        <label for="floatingInput">Username</label>
+                    </div>
+                    <div class="form-floating mt-2">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Senha" required
+                            v-model.lazy="password">
+                        <label for="floatingPassword">Senha</label>
+                    </div>
+                    <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Entrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="js/vue/vue.global.js"></script>
+
+    <script src="js/ApiClient.js"></script>
+    <script src="js/Helper.js"></script>
+</body>
+
+</html>
+
+<script>
+    "use strict";
+
+    const ComandaProApp = {
+        data() {
+            return {
+                message: { text: '', type: 'primary' },
+
+                apiClient: new ApiClient('https://localhost:7100/gateway'),
+                authToken: null,
+                username: null,
+                password: null
+            }
+        },
+        methods: {
+            authenticate: async function () {
+                this.message.text = '';
+
+                const request = {
+                    username: this.username,
+                    password: this.password,
+                };
+                console.log(request);
+                try {
+                    this.authToken = await this.apiClient.post('auth/login', request);
+                    localStorage.setItem('authToken', JSON.stringify(Vue.toRaw(this.authToken)));
+                    this.redirect();
+                }
+                catch (error) {
+                    this.message.text = 'Erro: Ocorreu um erro na autenticação';
+                    this.message.type = 'danger';
+                }
+            },
+            redirect: function () {
+                location.href = 'index.html';
+            }
+        },
+        async mounted() {
+        }
+    };
+
+    Vue.createApp(ComandaProApp).mount('#app');
+
+</script>
