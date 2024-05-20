@@ -31,14 +31,30 @@ class ApiClient {
         };
 
         const data = await fetch(url, options);
+
+        const response = await this.tryGetResponseAsJson(data);
+
         if (!data.ok) {
-            throw Error(data);
+            if (response) {
+                throw new Error(response[0].Message);
+            }
+            else {
+                throw new Error(data);
+            }
         }
+
+        return response;
+
+    }
+
+    async tryGetResponseAsJson(data) {
         const contentType = data.headers.get("content-type");
         if (contentType && contentType.indexOf("application/json") !== -1) {
             const response = await data.json();
             return response;
         };
+
+        return null;
     }
 
 }

@@ -40,6 +40,7 @@ namespace Command.Test.IntegrationTests
 				.Options;
 		}
 
+
 		[TestMethod]
 		public async Task GetOpenCommandsAsync_ShouldReturnCommand_WhenCommandExists()
 		{
@@ -57,5 +58,6 @@ namespace Command.Test.IntegrationTests
 			Assert.IsNotNull(result);
 			Assert.AreEqual(StaticNotifications.CommandOpenedSuccess.Message, result.Message);
 		}
+
 	}
 }

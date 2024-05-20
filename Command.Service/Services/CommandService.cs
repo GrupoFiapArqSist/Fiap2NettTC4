@@ -9,6 +9,7 @@ using Command.Domain.Filters;
 using Command.Domain.Interfaces.Integration;
 using Command.Domain.Interfaces.Repositories;
 using Command.Domain.Interfaces.Services;
+using Command.Service.Validators;
 
 namespace Command.Service.Services
 {
@@ -21,6 +22,15 @@ namespace Command.Service.Services
 
 		public async Task<DefaultServiceResponseDto> OpenCommand(int number, int userId)
 		{
+			var dto = new CommandDto { Number = number, UserId = userId, Status = CommandStatusEnum.Open };
+
+			var validationResult = Validate(dto, Activator.CreateInstance<CommandDtoValidator>());
+			if (!validationResult.IsValid)
+			{
+				_notificationContext.AddNotifications(validationResult.Errors);
+				return default;
+			}
+
 			var existingCommand = await _commandRepository.Select(c => c.Number == number && c.Status == CommandStatusEnum.Open);
 
 			if (existingCommand.FirstOrDefault() != null)
@@ -32,7 +42,7 @@ namespace Command.Service.Services
 				};
 			}
 
-			var command = new Domain.Entities.Command { Number = number, UserId = userId, Status = CommandStatusEnum.Open };
+			var command = _mapper.Map<Domain.Entities.Command>(dto);
 			command = await _commandRepository.InsertWithReturnId(command);
 
 			if (command == null)
@@ -66,6 +76,13 @@ namespace Command.Service.Services
 
 		public async Task<CommandDto?> CloseCommand(int number, string accessToken)
 		{
+			var validationResult = Validate(new CommandDto { Number = number }, Activator.CreateInstance<CommandDtoValidator>());
+			if (!validationResult.IsValid)
+			{
+				_notificationContext.AddNotifications(validationResult.Errors);
+				return default;
+			}
+
 			var command = (await _commandRepository.Select(c => c.Number == number)).SingleOrDefault();
 
 			if (command == null)
