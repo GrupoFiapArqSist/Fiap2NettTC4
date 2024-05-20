@@ -4,16 +4,12 @@ using Order.Domain.Entities;
 
 namespace Order.API.Mapper;
 
-public class MappingConfig
+public class MappingConfig : Profile
 {
-    public static MapperConfiguration RegisterMaps()
+    public MappingConfig()
     {
-        var mappingConfig = new MapperConfiguration(config =>
-        {
-            config.CreateMap<OrderDto, Domain.Entities.Order>().ReverseMap();
-            config.CreateMap<AddOrderDto, Domain.Entities.Order>().ReverseMap();
-            config.CreateMap<OrderItemsDto, OrderItems>().ReverseMap();
-        });
-        return mappingConfig;
+        CreateMap<OrderDto, Domain.Entities.Order>().ReverseMap();
+        CreateMap<AddOrderDto, Domain.Entities.Order>().ReverseMap();
+        CreateMap<OrderItemsDto, OrderItems>().ReverseMap();
     }
 }

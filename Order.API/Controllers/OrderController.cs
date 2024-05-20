@@ -26,7 +26,7 @@ public class OrderController(IOrderService orderService) : Controller
     [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
     public async Task<IActionResult> AddOrder([FromBody] AddOrderDto addOrdeDto)
     {
-        var order = await _orderService.AddOrder(addOrdeDto, this.GetUserIdLogged(), this.GetAccessToken());
+        var order = await _orderService.AddOrder(addOrdeDto, this.GetUserIdLogged());
 
         return Ok(order);
     }
