@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using ComandaPro.CrossCutting.Notifications;
 using ComandaPro.Domain.Dtos.Default;
+using ComandaPro.Domain.Extensions;
 using ComandaPro.Service.Services;
 using Command.Domain.Dtos;
 using Command.Domain.Enums;
+using Command.Domain.Filters;
 using Command.Domain.Interfaces.Integration;
 using Command.Domain.Interfaces.Repositories;
 using Command.Domain.Interfaces.Services;
@@ -49,10 +51,16 @@ namespace Command.Service.Services
 			};
 		}
 
-		public async Task<IEnumerable<CommandDto>> GetOpenCommands()
+		public async Task<IEnumerable<CommandDto>> GetCommands(CommandFilter filter, string accessToken)
 		{
-			var commands = await _commandRepository.Select();
+			var commands = (await _commandRepository.Select()).AsQueryable().ApplyFilter(filter).Where(c => c.Status == filter.Status).ToList();
 			var dtos = _mapper.Map<IEnumerable<CommandDto>>(commands);
+			foreach (var dto in dtos)
+			{
+				var orders = await _orderIntegration.GetOrdersByCommand(dto.Id, accessToken);
+				dto.Orders = orders;
+				dto.ValueTotalBeforeServiceCharge = orders.Sum(o => o.ValueTotal);
+			}
 			return dtos;
 		}
 

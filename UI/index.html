@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComandaPro</title>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<body>
+    <div id="app" class="container" v-cloak>
+        <div class="row mt-3 mb-3">
+            <div class="col">
+                <h1 class="text-center">ComandaPro</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 offset-md-4 col  text-center">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control form-control-lg" placeholder="Número da Comanda" aria-label="Número da Comanda" aria-describedby="button-addon" v-model.lazy="newCommand">
+                    <button class="btn btn-primary btn-lg" type="button" id="button-addon" @click="openCommand()">Abrir Comanda</button>
+                  </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <div class="table-responsive">
+                    <table class="table table-hover caption-top">
+                        <caption class="text-center">Comandas Abertas:</caption>
+                        <thead class="table-dark">
+                            <th>Número</th>
+                            <th>Horário de Abertura</th>
+                            <th>Quantidade de Pedidos</th>
+                            <th>Valor Atual</th>
+                            <th></th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <tr v-for="command in openCommands">
+                                <td>{{ command.number }}</td>
+                                <td>{{ new Date(command.createdAt).toLocaleDateString() + ' ' + new
+                                    Date(command.createdAt).toLocaleTimeString() }}</td>
+                                <td>{{ command.orders.length }}</td>
+                                <td>{{ command.valueTotalBeforeServiceCharge.formatCurrency() }}</td>
+                                <td>
+                                    <button class="btn btn-success btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#modal-add-order"
+                                        @click="selectedCommand = command.number">Adicionar Pedido</button>
+                                </td>
+                                <td><button class="btn btn-danger btn-sm" @click="closeCommand(command.number)">Fechar Comanda</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-add-order" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 id="modal-title" class="modal-title fs-5">Adicionar Pedido</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="command" class="form-label">Comanda</label>
+                                <input id="command" type="text" class="form-control" :value="selectedCommand" disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="category" class="form-label">Categoria</label>
+                                <select id="category" class="form-select" required @change="getProducts($event)">
+                                    <option></option>
+                                    <option v-for="category in categories" :key="category.id" :value="category.id">
+                                        {{ category.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="product" class="form-label">Produto</label>
+                                <select id="product" class="form-select" required @change="selectProduct($event)">
+                                    <option></option>
+                                    <option v-for="product in products" :key="product.id" :value="product.id">
+                                        {{ product.name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="price" class="form-label">Preço</label>
+                                <input id="price" type="text" class="form-control"
+                                    :value="selectedProduct?.price.formatCurrency()" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" @click="addProduct">
+                            <i class="fa-solid fa-floppy-disk"></i>Salvar
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fa-solid fa-xmark"></i>Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="js/vue/vue.global.js"></script>
+
+    <script src="js/ApiClient.js"></script>
+    <script src="js/Helper.js"></script>
+</body>
+
+</html>
+
+<script>
+    "use strict";
+
+    const ComandaProApp = {
+        data() {
+            return {
+                apiClient: new ApiClient('https://localhost:7100/gateway'),
+                authToken: null,
+                categories: [],
+                newCommand: null,
+                openCommands: [],
+                products: [],
+                selectedCommand: null,
+                selectedProduct: null,
+            }
+        },
+        methods: {
+            addProduct: async function () {
+                const request = {
+                    commandId: this.selectedCommand,
+                    orderItems: [{
+                        productId: this.selectedProduct.id,
+                        amount: 1,
+                        valueUnit: this.selectedProduct.price
+                    }]
+                };
+
+                await this.apiClient.post('order/create-orders', request, this.authToken);
+
+                await this.getOpenCommands();
+            },
+            authenticate: async function () {
+                const request = {
+                    username: 'admin',
+                    password: '1q2w3e4r@#$A'
+                }
+                this.authToken = await this.apiClient.post('auth/login', request);
+            },
+            closeCommand: async function(commandNumber) {
+                await this.apiClient.put(`command/close/${commandNumber}`, null, this.authToken);
+                await this.getOpenCommands();
+            },
+            getCategories: async function () {
+                this.categories = await this.apiClient.post('category/get-categories', {}, this.authToken);
+            },
+            getOpenCommands: async function () {
+                this.openCommands = await this.apiClient.post('command', { status: 2 }, this.authToken);
+            },
+            getProducts: async function (event) {
+                const categoryId = event.currentTarget.value;
+                if (categoryId) {
+                    this.products = await this.apiClient.post('product/get-products', { categoryId: categoryId }, this.authToken);
+                }
+                else {
+                    this.products = [];
+                    this.selectedProduct = null;
+                }
+            },
+            openCommand: async function() {
+                const number = this.newCommand;
+                await this.apiClient.post(`command/open/${number}`, null, this.authToken);
+                await this.getOpenCommands();
+            },
+            selectProduct: function (event) {
+                const productId = parseInt(event.currentTarget.value);
+                const products = Vue.toRaw(this.products);
+                const product = products.find(p => p.id === productId);
+                this.selectedProduct = product;
+            }
+        },
+        async mounted() {
+            await this.authenticate();
+            await this.getOpenCommands();
+            await this.getCategories();
+        }
+    };
+
+    Vue.createApp(ComandaProApp).mount('#app');
+
+</script>
