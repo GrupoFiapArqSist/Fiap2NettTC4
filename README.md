@@ -41,6 +41,13 @@ Os serviços também se comunicam através dos endpoints e do gateway para acess
 
 * Detalhes dos Microserviços:
 
+## Autenticação e controle de usuários 
+
+Microsserviço responsável pelo gerenciamento de usuários e autenticação.
+
+Endpoints
+![image](https://github.com/GrupoFiapArqSist/Fiap2NettTC4/assets/60990141/56886ded-f8d2-4aea-84a9-9128b107ff0a)
+
 ## Command 
 
 Microsserviço responsável pelo gerenciamento de comandas.
@@ -48,7 +55,6 @@ Microsserviço responsável pelo gerenciamento de comandas.
 Endpoints
 
 ![image](https://github.com/GrupoFiapArqSist/Fiap2NettTC4/assets/60990141/4e4a159c-71ed-47e9-afea-93b4c11eac4b)
-
 
 ## Category
 
