@@ -86,6 +86,8 @@ Endpoints
 
 ![image](https://github.com/GrupoFiapArqSist/Fiap2NettTC4/assets/5952619/614013cc-354f-461e-a47c-02c6aa91d16b)
 
+![image23](https://github.com/GrupoFiapArqSist/Fiap2NettTC4/assets/143532676/20ce9f1f-ad2d-4242-9e03-969fd737b462)
+
 ### Qualidade de software
 
 Foi desenvolvido testes unitários e de integração nos principais casos de uso(TDD). 
