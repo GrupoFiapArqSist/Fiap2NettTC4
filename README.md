@@ -82,7 +82,9 @@ Endpoints
 
 ## UI
 
-#### FALTA AQUI
+![image](https://github.com/GrupoFiapArqSist/Fiap2NettTC4/assets/5952619/eb26ac2d-5101-40fb-be41-f9a60628d069)
+
+![image](https://github.com/GrupoFiapArqSist/Fiap2NettTC4/assets/5952619/614013cc-354f-461e-a47c-02c6aa91d16b)
 
 ### Qualidade de software
 
