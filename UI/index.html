@@ -195,13 +195,14 @@
                 this.openCommands = await this.apiClient.post('command', { status: 2 }, this.authToken);
             },
             getProducts: async function (event) {
+                this.selectedProduct = null;
+
                 const categoryId = event.currentTarget.value;
                 if (categoryId) {
                     this.products = await this.apiClient.post('product/get-products', { categoryId: categoryId }, this.authToken);
                 }
                 else {
                     this.products = [];
-                    this.selectedProduct = null;
                 }
             },
             openCommand: async function () {
